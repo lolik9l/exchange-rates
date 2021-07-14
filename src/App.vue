@@ -1,32 +1,61 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app dark>
+    <v-navigation-drawer 
+      v-model="drawer" 
+      color="#E3F2FD"
+      app 
+      permanent
+    >
+      <v-list-item>
+        <v-list-item-content>
+          <v-list-item-title class="text-h6"> Обмен валют </v-list-item-title>
+          <v-list-item-subtitle> Created by Ilya </v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-divider />
+      <v-list dense nav>
+        <v-list-item
+          v-for="(route, i) in routers"
+          :key="i"
+          link
+          :to="route.href"
+        >
+          <v-list-item-icon class="mr-2">
+            <v-icon>{{ route.icon }}</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title class="text-body-2">{{
+              route.title
+            }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+
+    <v-main>
+      <v-container fluid>
+        <router-view />
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+export default {
+  name: "App",
+  data: () => ({
+    routers: [
+      { title: "Главная", href: "/", icon: "mdi-view-dashboard" },
+      { title: "Настройки", href: "/settings", icon: "mdi-image" },
+    ],
+    drawer: true,
+  }),
+  mounted() {
+    this.$store.dispatch("ExchangeModule/getCurrencies");
+  },
+};
+</script>
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-</style>
+<style lang="scss"></style>
