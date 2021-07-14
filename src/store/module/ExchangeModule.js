@@ -29,6 +29,8 @@ export default {
         commit('commitToggleLoading', true);
         const response = await ExchangeApi.index();
         if (response.status === 200) {
+          // Искуственная задержка
+          await new Promise((res) => setTimeout(res, 500));
           commit('commitItems', response.data);
           return;
         }
