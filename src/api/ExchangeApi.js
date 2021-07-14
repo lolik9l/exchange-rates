@@ -1,7 +1,7 @@
-import Vue from 'vue';
+import axios from 'axios';
 
 function ExratesApi() {
-  this.index = (options) => Vue.http.get('https://www.nbrb.by/api/exrates/currencies', options);
+  this.index = (options) => axios.get('https://www.nbrb.by/api/exrates/rates?periodicity=0', options);
 }
 
 export default new ExratesApi();

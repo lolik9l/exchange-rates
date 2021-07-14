@@ -1,7 +1,6 @@
 import Vue from 'vue';
-import Vuetify from 'vuetify/lib/framework';
-import '@/sass/custom.scss';
 import '@mdi/font/css/materialdesignicons.css';
+import Vuetify from 'vuetify/lib/framework';
 
 Vue.use(Vuetify);
 

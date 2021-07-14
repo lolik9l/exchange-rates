@@ -4,13 +4,20 @@ import { getField, updateField } from 'vuex-map-fields';
 export default {
   namespaced: true,
   state: {
-    items: [],
+    itemsAll: [],
+    itemsAdded: [],
+    keys: [
+      { key: 'Cur_Name', name: 'Наименование' },
+      { key: 'Cur_OfficialRate', name: 'Курс' },
+      { key: 'Cur_Abbreviation', name: 'Код валюты' },
+      { key: 'Date', name: 'Дата' },
+    ],
     loading: true,
   },
   mutations: {
     updateField,
-    commitItemsTable(state, data) {
-      state.items = data;
+    commitItems(state, data) {
+      state.itemsAll = data;
     },
     commitToggleLoading(state, cmd) {
       state.loading = cmd;
@@ -21,16 +28,15 @@ export default {
       try {
         commit('commitToggleLoading', true);
         const response = await ExchangeApi.index();
-        console.log(response);
-        if (response.status == 200) {
-          commit('commitItemsTable', response);
+        if (response.status === 200) {
+          commit('commitItems', response.data);
           return;
         }
-        throw 'Ошибка';
+        throw Error('Ошибка');
       } catch (error) {
         console.error(error);
       } finally {
-        // commit('commitToggleLoading', false);
+        commit('commitToggleLoading', false);
       }
     },
   },

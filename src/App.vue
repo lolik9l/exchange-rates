@@ -1,15 +1,19 @@
 <template>
   <v-app dark>
-    <v-navigation-drawer 
-      v-model="drawer" 
+    <v-navigation-drawer
+      v-model="drawer"
       color="#E3F2FD"
-      app 
+      app
       permanent
     >
       <v-list-item>
         <v-list-item-content>
-          <v-list-item-title class="text-h6"> Обмен валют </v-list-item-title>
-          <v-list-item-subtitle> Created by Ilya </v-list-item-subtitle>
+          <v-list-item-title class="text-h6">
+            Курс валют
+          </v-list-item-title>
+          <v-list-item-subtitle>
+            официальный и актуальный :)
+          </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
 
@@ -44,16 +48,16 @@
 
 <script>
 export default {
-  name: "App",
+  name: 'App',
   data: () => ({
     routers: [
-      { title: "Главная", href: "/", icon: "mdi-view-dashboard" },
-      { title: "Настройки", href: "/settings", icon: "mdi-image" },
+      { title: 'Главная', href: '/', icon: 'mdi-view-dashboard' },
+      { title: 'Настройки', href: '/settings', icon: 'mdi-image' },
     ],
     drawer: true,
   }),
-  mounted() {
-    this.$store.dispatch("ExchangeModule/getCurrencies");
+  async mounted() {
+    await this.$store.dispatch('ExchangeModule/getCurrencies');
   },
 };
 </script>
